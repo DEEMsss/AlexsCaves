@@ -42,9 +42,9 @@ public class DeepOneKnightEntity extends DeepOneBaseEntity {
     private boolean melee = random.nextBoolean();
     private static final EntityDimensions SWIMMING_SIZE = new EntityDimensions(1.2F, 1.3F, false);
 
-    public static final ResourceLocation BARTER_LOOT = new ResourceLocation(AlexsCaves.MODID, "gameplay/deep_one_knight_barter");
+    public static final ResourceLocation BARTER_LOOT = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "gameplay/deep_one_knight_barter");
 
-    public DeepOneKnightEntity(EntityType<? extends Monster> entityType, Level level) {
+    public DeepOneKnightEntity(EntityType entityType, Level level) {
         super(entityType, level);
     }
 

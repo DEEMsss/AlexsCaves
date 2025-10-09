@@ -21,6 +21,7 @@ import com.github.alexmodguy.alexscaves.server.item.ACItemRegistry;
 import com.github.alexmodguy.alexscaves.server.level.biome.ACBiomeRegistry;
 import com.github.alexmodguy.alexscaves.server.level.carver.ACCarverRegistry;
 import com.github.alexmodguy.alexscaves.server.level.feature.ACFeatureRegistry;
+import com.github.alexmodguy.alexscaves.server.level.storage.ACWorldData;
 import com.github.alexmodguy.alexscaves.server.level.structure.ACStructureRegistry;
 import com.github.alexmodguy.alexscaves.server.level.structure.piece.ACStructurePieceRegistry;
 import com.github.alexmodguy.alexscaves.server.level.structure.processor.ACStructureProcessorRegistry;
@@ -36,6 +37,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.world.ForgeChunkManager;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -64,7 +66,7 @@ public class AlexsCaves {
     public static final Logger LOGGER = LogUtils.getLogger();
     public static CommonProxy PROXY = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
     private static final String PROTOCOL_VERSION = Integer.toString(1);
-    private static final ResourceLocation PACKET_NETWORK_NAME = new ResourceLocation("alexscaves:main_channel");
+    private static final ResourceLocation PACKET_NETWORK_NAME = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "main_channel");
     public static final SimpleChannel NETWORK_WRAPPER = NetworkRegistry.ChannelBuilder
             .named(PACKET_NETWORK_NAME)
             .clientAcceptedVersions(PROTOCOL_VERSION::equals)
@@ -86,6 +88,7 @@ public class AlexsCaves {
         CLIENT_CONFIG_SPEC = clientPair.getRight();
     }
 
+    @SuppressWarnings("removal")
     public AlexsCaves() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, COMMON_CONFIG_SPEC, "alexscaves-general.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CLIENT_CONFIG_SPEC, "alexscaves-client.toml");
@@ -121,7 +124,8 @@ public class AlexsCaves {
         ACFrogRegistry.DEF_REG.register(modEventBus);
         ACFluidRegistry.FLUID_TYPE_DEF_REG.register(modEventBus);
         ACFluidRegistry.FLUID_DEF_REG.register(modEventBus);
-        ACLootTableRegistry.DEF_REG.register(modEventBus);
+        ACLootTableRegistry.GLOBAL_LOOT_MODIFIER_DEF_REG.register(modEventBus);
+        ACLootTableRegistry.LOOT_FUNCTION_DEF_REG.register(modEventBus);
         ACCreativeTabRegistry.DEF_REG.register(modEventBus);
         ACPotPatternRegistry.DEF_REG.register(modEventBus);
         PROXY.commonInit();
@@ -154,6 +158,7 @@ public class AlexsCaves {
         NETWORK_WRAPPER.registerMessage(packetsRegistered++, UpdateCaveBiomeMapTagMessage.class, UpdateCaveBiomeMapTagMessage::write, UpdateCaveBiomeMapTagMessage::read, UpdateCaveBiomeMapTagMessage::handle);
         NETWORK_WRAPPER.registerMessage(packetsRegistered++, UpdateBossEruptionStatus.class, UpdateBossEruptionStatus::write, UpdateBossEruptionStatus::read, UpdateBossEruptionStatus::handle);
         NETWORK_WRAPPER.registerMessage(packetsRegistered++, UpdateBossBarMessage.class, UpdateBossBarMessage::write, UpdateBossBarMessage::read, UpdateBossBarMessage::handle);
+        NETWORK_WRAPPER.registerMessage(packetsRegistered++, SundropRainbowMessage.class, SundropRainbowMessage::write, SundropRainbowMessage::read, SundropRainbowMessage::handle);
         event.enqueueWork(() -> {
             ACSurfaceRules.setup();
             ACPlayerCapes.setup();
@@ -163,6 +168,7 @@ public class AlexsCaves {
             ACAdvancementTriggerRegistry.setup();
             ACPotPatternRegistry.expandVanillaDefinitions();
             ACBlockEntityRegistry.expandVanillaDefinitions();
+            ForgeChunkManager.setForcedChunkLoadingCallback(MODID, ACWorldData::clearLoadedChunksCallback);
         });
         readModIncompatibilities();
     }
@@ -181,8 +187,9 @@ public class AlexsCaves {
         }
     }
 
-    public void loadComplete(FMLLoadCompleteEvent event) {
+    private void loadComplete(FMLLoadCompleteEvent event) {
         event.enqueueWork(ACFluidRegistry::postInit);
+        event.enqueueWork(ACLoadedMods::afterAllModsLoaded);
     }
 
     public static <MSG> void sendNonLocal(MSG msg, ServerPlayer player) {

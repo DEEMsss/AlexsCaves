@@ -29,42 +29,53 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.ForgeRenderTypes;
 
 public class ACItemstackRenderer extends BlockEntityWithoutLevelRenderer {
-    private static final ResourceLocation GALENA_GAUNTLET_TEXTURE = new ResourceLocation("alexscaves:textures/entity/galena_gauntlet.png");
-    private static final ResourceLocation GALENA_GAUNTLET_RED_TEXTURE = new ResourceLocation("alexscaves:textures/entity/galena_gauntlet_red.png");
-    private static final ResourceLocation GALENA_GAUNTLET_BLUE_TEXTURE = new ResourceLocation("alexscaves:textures/entity/galena_gauntlet_blue.png");
+    private static final ResourceLocation GALENA_GAUNTLET_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/galena_gauntlet.png");
+    private static final ResourceLocation GALENA_GAUNTLET_RED_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/galena_gauntlet_red.png");
+    private static final ResourceLocation GALENA_GAUNTLET_BLUE_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/galena_gauntlet_blue.png");
     private static final GalenaGauntletModel GALENA_GAUNTLET_RIGHT_MODEL = new GalenaGauntletModel(false);
     private static final GalenaGauntletModel GALENA_GAUNTLET_LEFT_MODEL = new GalenaGauntletModel(true);
-    private static final ResourceLocation RESISTOR_SHIELD_TEXTURE = new ResourceLocation("alexscaves:textures/entity/resistor_shield.png");
-    private static final ResourceLocation RESISTOR_SHIELD_RED_TEXTURE = new ResourceLocation("alexscaves:textures/entity/resistor_shield_red.png");
-    private static final ResourceLocation RESISTOR_SHIELD_BLUE_TEXTURE = new ResourceLocation("alexscaves:textures/entity/resistor_shield_blue.png");
+    private static final ResourceLocation RESISTOR_SHIELD_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/resistor_shield.png");
+    private static final ResourceLocation RESISTOR_SHIELD_RED_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/resistor_shield_red.png");
+    private static final ResourceLocation RESISTOR_SHIELD_BLUE_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/resistor_shield_blue.png");
     private static final ResistorShieldModel RESISTOR_SHIELD_MODEL = new ResistorShieldModel();
-    private static final ResourceLocation PRIMITIVE_CLUB_TEXTURE = new ResourceLocation("alexscaves:textures/entity/primitive_club.png");
+    private static final ResourceLocation PRIMITIVE_CLUB_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/primitive_club.png");
     private static final PrimitiveClubModel PRIMITIVE_CLUB_MODEL = new PrimitiveClubModel();
-    private static final ResourceLocation LIMESTONE_SPEAR_TEXTURE = new ResourceLocation("alexscaves:textures/entity/limestone_spear.png");
+    private static final ResourceLocation LIMESTONE_SPEAR_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/limestone_spear.png");
     private static final LimestoneSpearModel LIMESTONE_SPEAR_MODEL = new LimestoneSpearModel();
-    private static final ResourceLocation EXTINCTION_SPEAR_TEXTURE = new ResourceLocation("alexscaves:textures/entity/extinction_spear.png");
+    private static final ResourceLocation EXTINCTION_SPEAR_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/extinction_spear.png");
     private static final ExtinctionSpearModel EXTINCTION_SPEAR_MODEL = new ExtinctionSpearModel();
-    private static final ResourceLocation SIREN_LIGHT_TEXTURE = new ResourceLocation(AlexsCaves.MODID, "textures/entity/siren_light.png");
-    private static final ResourceLocation SIREN_LIGHT_COLOR_TEXTURE = new ResourceLocation(AlexsCaves.MODID, "textures/entity/siren_light_color.png");
+    private static final ResourceLocation SIREN_LIGHT_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/siren_light.png");
+    private static final ResourceLocation SIREN_LIGHT_COLOR_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/siren_light_color.png");
     private static final SirenLightModel SIREN_LIGHT_MODEL = new SirenLightModel();
-    private static final ResourceLocation RAYGUN_TEXTURE = new ResourceLocation("alexscaves:textures/entity/raygun/raygun.png");
-    private static final ResourceLocation RAYGUN_ACTIVE_TEXTURE = new ResourceLocation("alexscaves:textures/entity/raygun/raygun_active.png");
-    private static final ResourceLocation RAYGUN_BLUE_TEXTURE = new ResourceLocation("alexscaves:textures/entity/raygun/raygun_blue.png");
-    private static final ResourceLocation RAYGUN_BLUE_ACTIVE_TEXTURE = new ResourceLocation("alexscaves:textures/entity/raygun/raygun_blue_active.png");
+    private static final ResourceLocation RAYGUN_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/raygun/raygun.png");
+    private static final ResourceLocation RAYGUN_ACTIVE_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/raygun/raygun_active.png");
+    private static final ResourceLocation RAYGUN_BLUE_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/raygun/raygun_blue.png");
+    private static final ResourceLocation RAYGUN_BLUE_ACTIVE_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/raygun/raygun_blue_active.png");
     private static final RaygunModel RAYGUN_MODEL = new RaygunModel();
-    private static final ResourceLocation SEA_STAFF_TEXTURE = new ResourceLocation("alexscaves:textures/entity/deep_one/sea_staff.png");
+    private static final ResourceLocation SEA_STAFF_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/deep_one/sea_staff.png");
     private static final SeaStaffModel SEA_STAFF_MODEL = new SeaStaffModel();
-    private static final ResourceLocation ORTHOLANCE_TEXTURE = new ResourceLocation("alexscaves:textures/entity/deep_one/ortholance.png");
+    private static final ResourceLocation ORTHOLANCE_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/deep_one/ortholance.png");
     private static final OrtholanceModel ORTHOLANCE_MODEL = new OrtholanceModel();
-    private static final ResourceLocation COPPER_VALVE_TEXTURE = new ResourceLocation(AlexsCaves.MODID, "textures/entity/copper_valve.png");
+    private static final ResourceLocation COPPER_VALVE_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/copper_valve.png");
     private static final CopperValveModel COPPER_VALVE_MODEL = new CopperValveModel();
     private static final BeholderModel BEHOLDER_MODEL = new BeholderModel();
-    private static final ResourceLocation BEHOLDER_TEXTURE = new ResourceLocation(AlexsCaves.MODID, "textures/entity/beholder.png");
-    private static final ResourceLocation BEHOLDER_TEXTURE_EYE = new ResourceLocation(AlexsCaves.MODID, "textures/entity/beholder_eye.png");
-    private static final ResourceLocation DREADBOW_TEXTURE = new ResourceLocation("alexscaves:textures/entity/dreadbow.png");
-    private static final ResourceLocation DREADBOW_TEXTURE_EYE = new ResourceLocation("alexscaves:textures/entity/dreadbow_eye.png");
-    private static final ResourceLocation DREADBOW_TEXTURE_EYE_PERFECT = new ResourceLocation("alexscaves:textures/entity/dreadbow_eye_perfect.png");
+    private static final ResourceLocation BEHOLDER_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/beholder.png");
+    private static final ResourceLocation BEHOLDER_TEXTURE_EYE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/beholder_eye.png");
+    private static final ResourceLocation DREADBOW_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/dreadbow.png");
+    private static final ResourceLocation DREADBOW_TEXTURE_EYE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/dreadbow_eye.png");
+    private static final ResourceLocation DREADBOW_TEXTURE_EYE_PERFECT = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/dreadbow_eye_perfect.png");
     private static final DreadbowModel DREADBOW_MODEL = new DreadbowModel();
+    private static final GobthumperModel GOBTHUMPER_MODEL = new GobthumperModel();
+    private static final ResourceLocation GOBTHUMPER_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/gobthumper.png");
+    private static final ResourceLocation GOBTHUMPER_JELLY_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/gobthumper_jelly.png");
+    private static final ResourceLocation SHOT_GUM_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/shot_gum.png");
+    private static final ResourceLocation SHOT_GUM_GLASS_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/shot_gum_glass.png");
+    private static final ShotGumModel SHOT_GUM_MODEL = new ShotGumModel();
+    private static final ResourceLocation SUGAR_STAFF_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/sugar_staff.png");
+    private static final SugarStaffModel SUGAR_STAFF_MODEL = new SugarStaffModel();
+    private static final ResourceLocation FROSTMINT_SPEAR_TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/frostmint_spear.png");
+    private static final FrostmintSpearModel FROSTMINT_SPEAR_MODEL = new FrostmintSpearModel();
+
     public static boolean sepiaFlag = false;
 
     private Entity renderedDreadbowArrow = null;
@@ -81,7 +92,7 @@ public class ACItemstackRenderer extends BlockEntityWithoutLevelRenderer {
         boolean left = transformType == ItemDisplayContext.THIRD_PERSON_LEFT_HAND || transformType == ItemDisplayContext.FIRST_PERSON_LEFT_HAND;
 
         if (itemStackIn.is(ACItemRegistry.CAVE_MAP.get())) {
-            poseStack.translate(0.5F, 0.5f, 0.5f);
+            poseStack.translate(0.5F, 0.5F, 0.5F);
             ItemStack spriteItem = new ItemStack(ACItemRegistry.CAVE_MAP_SPRITE.get());
             spriteItem.setTag(itemStackIn.getTag());
             boolean done = CaveMapItem.isFilled(itemStackIn) && !CaveMapItem.isLoading(itemStackIn);
@@ -161,7 +172,7 @@ public class ACItemstackRenderer extends BlockEntityWithoutLevelRenderer {
         }
 
         if (itemStackIn.is(ACItemRegistry.PRIMITIVE_CLUB.get())) {
-            poseStack.translate(0.5F, 0.5f, 0.5f);
+            poseStack.translate(0.5F, 0.5F, 0.5F);
             ItemStack spriteItem = new ItemStack(ACItemRegistry.PRIMITIVE_CLUB_SPRITE.get());
             spriteItem.setTag(itemStackIn.getTag());
             if (heldIn3d) {
@@ -181,7 +192,7 @@ public class ACItemstackRenderer extends BlockEntityWithoutLevelRenderer {
         }
 
         if (itemStackIn.is(ACItemRegistry.LIMESTONE_SPEAR.get())) {
-            poseStack.translate(0.5F, 0.5f, 0.5f);
+            poseStack.translate(0.5F, 0.5F, 0.5F);
             ItemStack spriteItem = new ItemStack(ACItemRegistry.LIMESTONE_SPEAR_SPRITE.get());
             spriteItem.setTag(itemStackIn.getTag());
             if (heldIn3d) {
@@ -201,7 +212,7 @@ public class ACItemstackRenderer extends BlockEntityWithoutLevelRenderer {
         }
 
         if (itemStackIn.is(ACItemRegistry.EXTINCTION_SPEAR.get())) {
-            poseStack.translate(0.5F, 0.5f, 0.5f);
+            poseStack.translate(0.5F, 0.5F, 0.5F);
             ItemStack spriteItem = new ItemStack(ACItemRegistry.EXTINCTION_SPEAR_SPRITE.get());
             spriteItem.setTag(itemStackIn.getTag());
             if (heldIn3d) {
@@ -254,7 +265,7 @@ public class ACItemstackRenderer extends BlockEntityWithoutLevelRenderer {
         }
 
         if (itemStackIn.is(ACItemRegistry.SEA_STAFF.get())) {
-            poseStack.translate(0.5F, 0.5f, 0.5f);
+            poseStack.translate(0.5F, 0.5F, 0.5F);
             ItemStack spriteItem = new ItemStack(ACItemRegistry.SEA_STAFF_SPRITE.get());
             spriteItem.setTag(itemStackIn.getTag());
             if (heldIn3d) {
@@ -273,7 +284,7 @@ public class ACItemstackRenderer extends BlockEntityWithoutLevelRenderer {
         }
 
         if (itemStackIn.is(ACItemRegistry.ORTHOLANCE.get())) {
-            poseStack.translate(0.5F, 0.5f, 0.5f);
+            poseStack.translate(0.5F, 0.5F, 0.5F);
             ItemStack spriteItem = new ItemStack(ACItemRegistry.ORTHOLANCE_SPRITE.get());
             spriteItem.setTag(itemStackIn.getTag());
             if (heldIn3d) {
@@ -314,7 +325,7 @@ public class ACItemstackRenderer extends BlockEntityWithoutLevelRenderer {
         if (itemStackIn.is(ACItemRegistry.DREADBOW.get())) {
             float ageInTicks = Minecraft.getInstance().player == null ? 0F : Minecraft.getInstance().player.tickCount + partialTick;
             float pullAmount = DreadbowItem.getPullingAmount(itemStackIn, partialTick);
-            poseStack.translate(0.5F, 0.5f, 0.5f);
+            poseStack.translate(0.5F, 0.5F, 0.5F);
             ItemStack spriteItem = new ItemStack(pullAmount >= 0.8F ? ACItemRegistry.DREADBOW_PULLING_2_SPRITE.get() : pullAmount >= 0.5F ? ACItemRegistry.DREADBOW_PULLING_1_SPRITE.get() : pullAmount > 0.0F ? ACItemRegistry.DREADBOW_PULLING_0_SPRITE.get() : ACItemRegistry.DREADBOW_SPRITE.get());
             spriteItem.setTag(itemStackIn.getTag());
             if (heldIn3d) {
@@ -352,6 +363,74 @@ public class ACItemstackRenderer extends BlockEntityWithoutLevelRenderer {
             }
         }
 
+        if (itemStackIn.is(ACBlockRegistry.GOBTHUMPER.get().asItem())) {
+            poseStack.pushPose();
+            poseStack.translate(0.5F, 1.5F, 0.5F);
+            poseStack.mulPose(Axis.XP.rotationDegrees(-180));
+            GOBTHUMPER_MODEL.setupAnim(null, 0.0F, 0.0F, 0.0F, 0, 0);
+            GOBTHUMPER_MODEL.renderToBuffer(poseStack, getVertexConsumer(bufferIn, RenderType.entityCutoutNoCull(GOBTHUMPER_TEXTURE),GOBTHUMPER_TEXTURE), combinedLightIn, combinedOverlayIn, 1.0F, 1.0F, 1.0F, 1.0F);
+            GOBTHUMPER_MODEL.renderToBuffer(poseStack, getVertexConsumer(bufferIn, RenderType.entityTranslucent(GOBTHUMPER_JELLY_TEXTURE), GOBTHUMPER_JELLY_TEXTURE), combinedLightIn, combinedOverlayIn, 1.0F, 1.0F, 1.0F, 1.0F);
+            poseStack.popPose();
+        }
+
+        if (itemStackIn.is(ACItemRegistry.SHOT_GUM.get())) {
+            float shootProgress = ShotGumItem.getLerpedShootTime(itemStackIn, partialTick) / 5F;
+            poseStack.pushPose();
+            poseStack.translate(0.5F, 1.5F, 0.5F);
+            poseStack.mulPose(Axis.XP.rotationDegrees(-180));
+            poseStack.mulPose(Axis.YP.rotationDegrees(180));
+            poseStack.pushPose();
+            poseStack.scale(0.8F, 0.8F, 0.8F);
+
+            SHOT_GUM_MODEL.setupAnim(null, shootProgress, ShotGumItem.getGumballsLeft(itemStackIn),  ShotGumItem.getLerpedCrankAngle(itemStackIn, partialTick), 0, 0);
+            SHOT_GUM_MODEL.renderToBuffer(poseStack, getVertexConsumerFoil(bufferIn, RenderType.entityCutoutNoCull(SHOT_GUM_TEXTURE), SHOT_GUM_TEXTURE, itemStackIn.hasFoil()), combinedLightIn, combinedOverlayIn, 1.0F, 1.0F, 1.0F, 1.0F);
+            SHOT_GUM_MODEL.renderToBuffer(poseStack, getVertexConsumerFoil(bufferIn, RenderType.entityTranslucent(SHOT_GUM_GLASS_TEXTURE), SHOT_GUM_GLASS_TEXTURE, itemStackIn.hasFoil()), combinedLightIn, combinedOverlayIn, 1.0F, 1.0F, 1.0F, 1.0F);
+            poseStack.popPose();
+            poseStack.popPose();
+        }
+
+        if (itemStackIn.is(ACItemRegistry.SUGAR_STAFF.get())) {
+            float ageInTicks = Minecraft.getInstance().player == null ? 0F : Minecraft.getInstance().player.tickCount + partialTick;
+            poseStack.translate(0.5F, 0.5F, 0.5F);
+            ItemStack spriteItem = new ItemStack(ACItemRegistry.SUGAR_STAFF_SPRITE.get());
+            spriteItem.setTag(itemStackIn.getTag());
+            if (heldIn3d) {
+                poseStack.pushPose();
+                poseStack.mulPose(Axis.XP.rotationDegrees(-180));
+                poseStack.translate(0, -1.0F, 0);
+                if (transformType.firstPerson()) {
+                    poseStack.translate(0, 0.4F, 0);
+                    poseStack.scale(0.6F, 0.6F, 0.6F);
+                }
+                VertexConsumer vertexconsumer = ItemRenderer.getArmorFoilBuffer(bufferIn, RenderType.armorCutoutNoCull(SUGAR_STAFF_TEXTURE), false, itemStackIn.hasFoil());
+                SUGAR_STAFF_MODEL.setupAnim(null, 0.0F, 0.0F,  ageInTicks, 0, 0);
+                SUGAR_STAFF_MODEL.renderToBuffer(poseStack, vertexconsumer, combinedLightIn, combinedOverlayIn, 1.0F, 1.0F, 1.0F, 1.0F);
+                poseStack.popPose();
+            } else {
+                renderStaticItemSprite(spriteItem, transformType, combinedLightIn, combinedOverlayIn, poseStack, bufferIn, level);
+            }
+        }
+
+        if (itemStackIn.is(ACItemRegistry.FROSTMINT_SPEAR.get())) {
+            poseStack.translate(0.5F, 0.5F, 0.5F);
+            ItemStack spriteItem = new ItemStack(ACItemRegistry.FROSTMINT_SPEAR_SPRITE.get());
+            spriteItem.setTag(itemStackIn.getTag());
+            if (heldIn3d) {
+                poseStack.pushPose();
+                poseStack.mulPose(Axis.XP.rotationDegrees(-180));
+                poseStack.translate(0, -0.85F, -0.1F);
+                if (transformType.firstPerson()) {
+                    poseStack.translate(0, 0.5F, 0F);
+                    poseStack.scale(0.75F, 0.75F, 0.75F);
+                }
+                FROSTMINT_SPEAR_MODEL.resetToDefaultPose();
+                VertexConsumer vertexconsumer1 = ItemRenderer.getArmorFoilBuffer(bufferIn, RenderType.entityCutoutNoCull(FROSTMINT_SPEAR_TEXTURE), false, itemStackIn.hasFoil());
+                FROSTMINT_SPEAR_MODEL.renderToBuffer(poseStack, vertexconsumer1, combinedLightIn, combinedOverlayIn, 1.0F, 1.0F, 1.0F, 1.0F);
+                poseStack.popPose();
+            } else {
+                renderStaticItemSprite(spriteItem, transformType, combinedLightIn, combinedOverlayIn, poseStack, bufferIn, level);
+            }
+        }
     }
 
     private void renderStaticItemSprite(ItemStack spriteItem, ItemDisplayContext transformType, int combinedLightIn, int combinedOverlayIn, PoseStack poseStack, MultiBufferSource bufferIn, ClientLevel level) {

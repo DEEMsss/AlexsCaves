@@ -36,9 +36,9 @@ public class CaveMapRenderer {
 
     private static final Map<ItemStack, CaveMapRenderer> CAVE_MAPS_ITEM_FRAME = new HashMap<>();
     private static final Map<ItemStack, CaveMapRenderer> CAVE_MAPS_HAND = new HashMap<>();
-    public static final ResourceLocation MAP_BACKGROUND = new ResourceLocation("textures/map/map_background.png");
-    public static final RenderType CAVE_MAP_PLAYER_TEXTURE = RenderType.text(new ResourceLocation(AlexsCaves.MODID, "textures/misc/map/cave_map_player.png"));
-    public static final RenderType CAVE_MAP_PLAYER_DIRECTION_TEXTURE = RenderType.text(new ResourceLocation(AlexsCaves.MODID, "textures/misc/map/cave_map_player_direction.png"));
+    public static final ResourceLocation MAP_BACKGROUND = ResourceLocation.withDefaultNamespace("textures/map/map_background.png");
+    public static final RenderType CAVE_MAP_PLAYER_TEXTURE = RenderType.text(ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/misc/map/cave_map_player.png"));
+    public static final RenderType CAVE_MAP_PLAYER_DIRECTION_TEXTURE = RenderType.text(ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/misc/map/cave_map_player_direction.png"));
     private final RenderType renderType;
 
     public BlockPos target;
@@ -203,6 +203,9 @@ public class CaveMapRenderer {
         if (biome.is(ACBiomeRegistry.FORLORN_HOLLOWS)) {
             return DefaultMapBackgrounds.FORLORN_HOLLOWS.getMapColor(u, v);
         }
+        if (biome.is(ACBiomeRegistry.CANDY_CAVITY)) {
+            return DefaultMapBackgrounds.CANDY_CAVITY.getMapColor(u, v);
+        }
         if (biome.is(Tags.Biomes.IS_SNOWY) && biome.is(BiomeTags.IS_OCEAN)) {
             return DefaultMapBackgrounds.FROZEN_OCEAN.getMapColor(u, v);
         }
@@ -306,7 +309,9 @@ public class CaveMapRenderer {
         vertexconsumer.vertex(matrix4f, 0.0F, 128.0F, -0.01F).color(255, 255, 255, 255).uv(0.0F, 1.0F).uv2(light).endVertex();
         vertexconsumer.vertex(matrix4f, 128.0F, 128.0F, -0.01F).color(255, 255, 255, 255).uv(1.0F, 1.0F).uv2(light).endVertex();
         vertexconsumer.vertex(matrix4f, 128.0F, 0.0F, -0.01F).color(255, 255, 255, 255).uv(1.0F, 0.0F).uv2(light).endVertex();
-        vertexconsumer.vertex(matrix4f, 0.0F, 0.0F, -0.01F).color(255, 255, 255, 255).uv(0.0F, 0.0F).uv2(light).endVertex();
+        vertexconsumer.vertex(matrix4f, 0.0F, 0.0F, -0.01F).color(255, 255,
+                255, 255).uv(0.0F, 0.0F).uv2(light).endVertex();
+
 
         renderLabels(poseStack, multiBufferSource, light);
         if (!fullFrame) {

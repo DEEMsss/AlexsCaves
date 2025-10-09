@@ -1,7 +1,9 @@
 package com.github.alexmodguy.alexscaves.client.render.entity;
 
+import com.github.alexmodguy.alexscaves.AlexsCaves;
 import com.github.alexmodguy.alexscaves.client.model.NucleeperModel;
 import com.github.alexmodguy.alexscaves.client.render.ACRenderTypes;
+import com.github.alexmodguy.alexscaves.client.render.entity.layer.NucleeperEnergySwirlLayer;
 import com.github.alexmodguy.alexscaves.server.entity.living.NucleeperEntity;
 import com.github.alexmodguy.alexscaves.server.misc.ACMath;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -23,18 +25,19 @@ import org.joml.Matrix4f;
 import static net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY;
 
 public class NucleeperRenderer extends MobRenderer<NucleeperEntity, NucleeperModel> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation("alexscaves:textures/entity/nucleeper/nucleeper.png");
-    private static final ResourceLocation TEXTURE_GLOW = new ResourceLocation("alexscaves:textures/entity/nucleeper/nucleeper_glow.png");
-    private static final ResourceLocation TEXTURE_GLASS = new ResourceLocation("alexscaves:textures/entity/nucleeper/nucleeper_glass.png");
-    private static final ResourceLocation TEXTURE_BUTTONS_0 = new ResourceLocation("alexscaves:textures/entity/nucleeper/nucleeper_buttons_0.png");
-    private static final ResourceLocation TEXTURE_BUTTONS_1 = new ResourceLocation("alexscaves:textures/entity/nucleeper/nucleeper_buttons_1.png");
-    private static final ResourceLocation TEXTURE_BUTTONS_2 = new ResourceLocation("alexscaves:textures/entity/nucleeper/nucleeper_buttons_2.png");
-    private static final ResourceLocation TEXTURE_EXPLODE = new ResourceLocation("alexscaves:textures/entity/nucleeper/nucleeper_explode.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/nucleeper/nucleeper.png");
+    private static final ResourceLocation TEXTURE_GLOW = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/nucleeper/nucleeper_glow.png");
+    private static final ResourceLocation TEXTURE_GLASS = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/nucleeper/nucleeper_glass.png");
+    private static final ResourceLocation TEXTURE_BUTTONS_0 = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/nucleeper/nucleeper_buttons_0.png");
+    private static final ResourceLocation TEXTURE_BUTTONS_1 = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/nucleeper/nucleeper_buttons_1.png");
+    private static final ResourceLocation TEXTURE_BUTTONS_2 = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/nucleeper/nucleeper_buttons_2.png");
+    private static final ResourceLocation TEXTURE_EXPLODE = ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "textures/entity/nucleeper/nucleeper_explode.png");
 
 
     public NucleeperRenderer(EntityRendererProvider.Context renderManagerIn) {
-        super(renderManagerIn, new NucleeperModel(), 0.8F);
+        super(renderManagerIn, new NucleeperModel(0.0F), 0.8F);
         this.addLayer(new LayerGlow());
+        this.addLayer(new NucleeperEnergySwirlLayer(this));
     }
 
     protected void scale(NucleeperEntity mob, PoseStack poseStack, float partialTicks) {
@@ -105,6 +108,9 @@ public class NucleeperRenderer extends MobRenderer<NucleeperEntity, NucleeperMod
             this.getParentModel().renderToBuffer(poseStack, ivertexbuilder2, packedLightIn, LivingEntityRenderer.getOverlayCoords(entitylivingbaseIn, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
             ResourceLocation buttons;
             int buttonDiv = entitylivingbaseIn.tickCount / 5 % 6;
+            if(entitylivingbaseIn.isCharged()){
+                buttonDiv = entitylivingbaseIn.tickCount / 2 % 6;
+            }
             if (buttonDiv < 2) {
                 buttons = TEXTURE_BUTTONS_0;
             } else if (buttonDiv < 4) {

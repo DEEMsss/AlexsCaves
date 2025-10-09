@@ -178,7 +178,7 @@ public class NuclearFurnaceBlockEntity extends BaseContainerBlockEntity implemen
                             entity.resetCookTime();
                             cookStack.shrink(1);
                             if (ItemStack.isSameItem(entity.items.get(3), cookResult)) {
-                                entity.items.get(3).grow(1);
+                                entity.items.get(3).grow(cookResult.getCount());
                             } else {
                                 entity.setItem(3, cookResult.copy());
                             }
@@ -370,7 +370,7 @@ public class NuclearFurnaceBlockEntity extends BaseContainerBlockEntity implemen
         barrelTime = compoundTag.getInt("BarrelTime");
         CompoundTag compoundtag = compoundTag.getCompound("RecipesUsed");
         for(String s : compoundtag.getAllKeys()) {
-            this.recipesUsed.put(new ResourceLocation(s), compoundtag.getInt(s));
+            this.recipesUsed.put(ResourceLocation.parse(s), compoundtag.getInt(s));
         }
     }
 

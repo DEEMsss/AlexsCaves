@@ -45,6 +45,7 @@ public class NuclearExplosionEntity extends Entity {
     private Stack<BlockPos> destroyingChunks = new Stack<>();
     private static final EntityDataAccessor<Float> SIZE = SynchedEntityData.defineId(NuclearExplosionEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Boolean> NO_GRIEFING = SynchedEntityData.defineId(NuclearExplosionEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> INTENTIONAL_GAME_DESIGN = SynchedEntityData.defineId(NuclearExplosionEntity.class, EntityDataSerializers.BOOLEAN);
     private boolean loadingChunks = false;
 
     private Explosion dummyExplosion;
@@ -73,7 +74,7 @@ public class NuclearExplosionEntity extends Entity {
             while (particleY > level().getMinBuildHeight() && particleY > this.getY() - radius / 2F && isDestroyable(level().getBlockState(BlockPos.containing(this.getX(), particleY, this.getZ())))) {
                 particleY--;
             }
-            level().addAlwaysVisibleParticle(ACParticleRegistry.MUSHROOM_CLOUD.get(), true, this.getX(), particleY + 2, this.getZ(), this.getSize(), 0, 0);
+            level().addAlwaysVisibleParticle(ACParticleRegistry.MUSHROOM_CLOUD.get(), true, this.getX(), particleY + 2, this.getZ(), this.getSize(), isIntentionalGameDesign() ? 1.0F : 0.0F, 0);
         }
         if (tickCount > 40 && destroyingChunks.isEmpty()) {
             this.remove(RemovalReason.DISCARDED);
@@ -121,11 +122,13 @@ public class NuclearExplosionEntity extends Entity {
                         }
                     }
                     if(damage > 0){
-                        entity.hurt(ACDamageTypes.causeNukeDamage(level().registryAccess()), damage);
+                        entity.hurt(isIntentionalGameDesign() ? ACDamageTypes.causeIntentionalGameDesign(level().registryAccess()) : ACDamageTypes.causeNukeDamage(level().registryAccess()), damage);
                     }
                 }
                 entity.setDeltaMovement(vec3.scale(damage * 0.1F * playerFling));
-                entity.addEffect(new MobEffectInstance(ACEffectRegistry.IRRADIATED.get(), 48000, getSize() <= 1.5F ? 1 : 2, false, false, true));
+                if(!this.isIntentionalGameDesign()){
+                    entity.addEffect(new MobEffectInstance(ACEffectRegistry.IRRADIATED.get(), 48000, getSize() <= 1.5F ? 1 : 2, false, false, true));
+                }
             }
         }
     }
@@ -178,6 +181,7 @@ public class NuclearExplosionEntity extends Entity {
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 for (int y = 15; y >= 0; y--) {
+                    boolean canSetToFire = false;
                     carve.set(chunkCorner.getX() + x, Mth.clamp(chunkCorner.getY() + y, level().getMinBuildHeight(), level().getMaxBuildHeight()), chunkCorner.getZ() + z);
                     float widthSimplexNoise1 = (ACMath.sampleNoise3D(carve.getX(), carve.getY(), carve.getZ(), radius) - 0.5F) * 0.45F + 0.55F;
                     double yDist = ACMath.smin(0.6F - Math.abs(this.blockPosition().getY() - carve.getY()) / (float) radius, 0.6F, 0.2F);
@@ -187,6 +191,7 @@ public class NuclearExplosionEntity extends Entity {
                         BlockState state = level().getBlockState(carve);
                         if ((!state.isAir() || !state.getFluidState().isEmpty()) && isDestroyable(state)) {
                             carveBelow.set(carve.getX(), carve.getY() - 1, carve.getZ());
+                            canSetToFire = true;
                             if(state.is(ACBlockRegistry.TREMORZILLA_EGG.get()) && state.getBlock() instanceof TremorzillaEggBlock tremorzillaEggBlock){
                                 tremorzillaEggBlock.spawnDinosaurs(level(), carve, state);
                             }else if (AlexsCaves.COMMON_CONFIG.nukesSpawnItemDrops.get() && random.nextFloat() < itemDropModifier && state.getFluidState().isEmpty()) {
@@ -196,9 +201,9 @@ public class NuclearExplosionEntity extends Entity {
                             }
                         }
                     }
-                }
-                if (random.nextFloat() < 0.15 && !level().getBlockState(carveBelow).isAir()) {
-                    level().setBlockAndUpdate(carveBelow.above(), Blocks.FIRE.defaultBlockState());
+                    if (canSetToFire && random.nextFloat() < 0.15 && !level().getBlockState(carveBelow).isAir()) {
+                        level().setBlockAndUpdate(carveBelow.above(), Blocks.FIRE.defaultBlockState());
+                    }
                 }
             }
         }
@@ -212,6 +217,7 @@ public class NuclearExplosionEntity extends Entity {
     protected void defineSynchedData() {
         this.entityData.define(SIZE, 1.0F);
         this.entityData.define(NO_GRIEFING, false);
+        this.entityData.define(INTENTIONAL_GAME_DESIGN, false);
     }
 
     public float getSize() {
@@ -229,6 +235,15 @@ public class NuclearExplosionEntity extends Entity {
     public void setNoGriefing(boolean noGriefing) {
         this.entityData.set(NO_GRIEFING, noGriefing);
     }
+
+    public boolean isIntentionalGameDesign() {
+        return this.entityData.get(INTENTIONAL_GAME_DESIGN);
+    }
+
+    public void setIntentionalGameDesign(boolean intentionalGameDesign) {
+        this.entityData.set(INTENTIONAL_GAME_DESIGN, intentionalGameDesign);
+    }
+
 
     @Override
     protected void readAdditionalSaveData(CompoundTag compoundTag) {

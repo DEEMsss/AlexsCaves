@@ -17,13 +17,13 @@ import java.util.Optional;
 
 public class AbyssalRuinsStructure extends Structure {
 
-    public static final Codec<AbyssalRuinsStructure> CODEC = simpleCodec((settings) -> new AbyssalRuinsStructure(settings));
+    public static final Codec<AbyssalRuinsStructure> CODEC = simpleCodec(AbyssalRuinsStructure::new);
 
     private static final ResourceLocation[] RUINS_NBT = new ResourceLocation[]{
-            new ResourceLocation(AlexsCaves.MODID, "abyssal_ruins_0"),
-            new ResourceLocation(AlexsCaves.MODID, "abyssal_ruins_1"),
-            new ResourceLocation(AlexsCaves.MODID, "abyssal_ruins_2"),
-            new ResourceLocation(AlexsCaves.MODID, "abyssal_ruins_3"),
+            ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "abyssal_ruins_0"),
+            ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "abyssal_ruins_1"),
+            ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "abyssal_ruins_2"),
+            ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "abyssal_ruins_3"),
     };
 
     public AbyssalRuinsStructure(StructureSettings settings) {

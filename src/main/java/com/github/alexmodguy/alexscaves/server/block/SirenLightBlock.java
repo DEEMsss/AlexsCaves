@@ -6,6 +6,7 @@ import com.github.alexmodguy.alexscaves.server.misc.ACMath;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -148,15 +149,16 @@ public class SirenLightBlock extends BaseEntityBlock {
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         ItemStack heldItem = player.getItemInHand(handIn);
         if (worldIn.getBlockEntity(pos) instanceof SirenLightBlockEntity sirenLightBlock && !player.isShiftKeyDown() && heldItem.getItem() instanceof DyeItem dyeItem) {
-            DyeColor dyeColor = dyeItem.getDyeColor();
-            sirenLightBlock.setColor(dyeColor.getTextColor());
-            if (!player.getAbilities().instabuild) {
-                heldItem.shrink(1);
+            if (sirenLightBlock.setColor(dyeItem.getDyeColor().getTextColor())) {
+                player.playSound(SoundEvents.DYE_USE);
+                if (!player.getAbilities().instabuild)
+                    heldItem.shrink(1);
+                return InteractionResult.SUCCESS;
             }
-            return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
     }
+
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

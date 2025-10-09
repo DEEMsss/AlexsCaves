@@ -13,7 +13,7 @@ import net.minecraft.world.level.material.MapColor;
 
 public class CavePaintingBlock extends DirectionalBlock {
 
-    private static String id = Util.makeDescriptionId("block", new ResourceLocation(AlexsCaves.MODID, "cave_painting"));
+    private static String id = Util.makeDescriptionId("block", ResourceLocation.fromNamespaceAndPath(AlexsCaves.MODID, "cave_painting"));
 
     public CavePaintingBlock() {
         super(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_YELLOW).requiresCorrectToolForDrops().strength(1.2F, 4.5F).sound(SoundType.DRIPSTONE_BLOCK));
@@ -35,7 +35,6 @@ public class CavePaintingBlock extends DirectionalBlock {
     public String getDescriptionId() {
         return id;
     }
-
 
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
